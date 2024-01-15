@@ -49,7 +49,6 @@ vehicle InsertVehicle(vehicle vehicles);
 void ViewAllVehicle();
 void UpdateVehicle();
 vehicle DeleteVehicle(vehicle auser);
-//void insertReservation();
 //void ViewAllReservation(reservation reuser, vehicle vehicles , rental ruser);
 payment rentReservation (payment pays, rental ruser, reservation reuser, vehicle vehicles);
 bool reservationExists(int vehicleId, const std::string& startDate);
@@ -224,7 +223,7 @@ admin adprofile(admin auser) {
     adprofileMenu.addOption("Save");
     adprofileMenu.addOption("Back");
     adprofileMenu.addOption("Delete Account");
-    adprofileMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '8' to go back.";
+    adprofileMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '' to go back.";
 
     char confirm;
     string tmpInput;
@@ -287,16 +286,11 @@ admin adprofile(admin auser) {
             }
             break;
         case 8:
-            auser = temp;
-            auser.update();
-            cout << "Updated";
-            _getch();
-        case 9:
-            return auser;
+            adhome(auser);
             break;
-        case 10:
+        case 9:
             cout << "Delete your account? (y/n)";
-            
+
             confirm = _getch();
             if (confirm == 'Y' || confirm == 'y') {
                 auser = temp;
@@ -306,6 +300,8 @@ admin adprofile(admin auser) {
             break;
         default:
             break;
+        
+            
         }
     }
 }
