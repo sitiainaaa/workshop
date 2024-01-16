@@ -49,7 +49,6 @@ vehicle InsertVehicle(vehicle vehicles);
 void ViewAllVehicle();
 void UpdateVehicle();
 vehicle DeleteVehicle(vehicle auser);
-//void ViewAllReservation(reservation reuser, vehicle vehicles , rental ruser);
 payment rentReservation (payment pays, rental ruser, reservation reuser, vehicle vehicles);
 bool reservationExists(int vehicleId, const std::string& startDate);
 void paymentTrans(int rentalId, rental ruser , reservation reuser ,vehicle vehicles );
