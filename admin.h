@@ -12,7 +12,8 @@ public:
 
     // Constructor methods
     admin(); // default constructor
-    admin(int adminId, std::string a_username, std::string a_firstName, std::string a_lastName, std::string a_email, std::string a_password, std::string a_phone_No , std::string a_address );
+    admin(int adminId, std::string a_username, std::string a_firstName, std::string a_lastName, std::string a_email
+        , std::string a_password, std::string a_phone_No , std::string a_address );
 
     // Member functions
     bool Login();
