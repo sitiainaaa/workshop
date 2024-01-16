@@ -96,7 +96,7 @@ void staff::insert() {
 
 void staff::update() {
     DBConnection db;
-    db.prepareStatement("UPDATE into staff (s_username,  s_firstName, s_lastName, s_email, s_password, s_phoneNo ,s_address, staffId) VALUES (?,?, ?, ?, ?, ?, ?, ?)");
+    db.prepareStatement("UPDATE staff SET s_username = ?,  s_firstName = ?, s_lastName =?, s_email =? , s_password =?, s_phoneNo = ? ,s_address =?  WHERE staffId = ? ");
     db.stmt->setString(1, s_username);
     db.stmt->setString(2, s_firstName);
     db.stmt->setString(3, s_lastName);
@@ -104,8 +104,9 @@ void staff::update() {
     db.stmt->setString(5, s_password);
     db.stmt->setString(6, s_phoneNo);
     db.stmt->setString(7, s_address);
-
+    db.stmt->setInt(8, staffId);
     db.QueryStatement();
+    db.~DBConnection();
 }
 
 void staff::remove() {

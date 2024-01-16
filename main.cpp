@@ -37,7 +37,7 @@ void staffInfo(staff suser);
 void custmanage(customer cuser);
 void Registercust();
 void ViewAllCust();
-customer DeleteCustomer(customer cuser);
+//customer DeleteCustomer(customer cuser);
 void ViewAllStaff();
 staff DeleteStaff(staff suser);
 void Rental(payment pays, rental ruser,  customer cuser, staff suser, reservation reuser, vehicle vehicles);
@@ -46,9 +46,9 @@ void ViewAllRental(payment pays, rental ruser, customer cuser, staff suser, rese
 void vehiclePage();
 vehicle InsertVehicle(vehicle vehicles);
 void ViewAllVehicle();
-void UpdateVehicle();
 vehicle DeleteVehicle(vehicle auser);
-payment rentReservation (payment pays, rental ruser, reservation reuser, vehicle vehicles);
+void ViewAllRentalreserve(payment pays, rental ruser, customer cuser, staff suser, reservation reuser, vehicle vehicles);
+payment rentReservation (payment pays, rental ruser, reservation reuser, vehicle vehicles , staff suser );
 bool reservationExists(int vehicleId, const std::string& startDate);
 void paymentTrans(int rentalId, rental ruser , reservation reuser ,vehicle vehicles );
 void SaleReportMenu(admin auser);
@@ -217,7 +217,7 @@ admin adprofile(admin auser) {
     adprofileMenu.addOption("address");
     adprofileMenu.addOption("Save");
     adprofileMenu.addOption("Back");
-    adprofileMenu.addOption("Delete Account");
+   
     adprofileMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '8' to go back.";
 
     char confirm;
@@ -283,16 +283,7 @@ admin adprofile(admin auser) {
         case 8:
             adhome(auser);
             break;
-        case 9:
-            cout << "Delete your account? (y/n)";
-
-            confirm = _getch();
-            if (confirm == 'Y' || confirm == 'y') {
-                auser = temp;
-                auser.remove();
-                main();
-            }
-            break;
+       
         default:
             break;
         
@@ -475,6 +466,7 @@ void sthome(staff suser)
     payment pays;
     vehicle vehicles;
 
+
     while (1) {
          
          sthomeMenu.header = "\n =============== Welcome " + suser.s_username + " ( Your ID: " + std::to_string(suser.staffId) + ")==========================";
@@ -494,7 +486,7 @@ void sthome(staff suser)
             custmanage(cuser);
             break;
         case 3:
-            rentReservation( pays,  ruser,  reuser,  vehicles);
+            rentReservation( pays,  ruser,  reuser,  vehicles, suser);
             break;
         case 4:
             Loginstaff();
@@ -512,6 +504,7 @@ staff stfprofile(staff suser)
     staff temp = suser; // copy the object
     Menu stprofileMenu;
     stprofileMenu.header = "\t\t -------------------- Your profile -----------------------\n";
+    stprofileMenu.addOption("staff ID");
     stprofileMenu.addOption("username");
     stprofileMenu.addOption("password");
     stprofileMenu.addOption("email");
@@ -520,52 +513,57 @@ staff stfprofile(staff suser)
     stprofileMenu.addOption("Reset");
     stprofileMenu.addOption("Save");
     stprofileMenu.addOption("Back");
-    stprofileMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '8' to go back.";
+    stprofileMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '9' to go back.";
   
 
     string tmpInput;
     while (1)
     {
-        stprofileMenu.setValue(0, temp.s_username);
-        stprofileMenu.setValue(1, temp.s_password);
-        stprofileMenu.setValue(2, temp.s_email);
-        stprofileMenu.setValue(3, temp.s_phoneNo);
-        stprofileMenu.setValue(4, temp.s_address);
+        stprofileMenu.setValue(0, to_string(temp.staffId));
+        stprofileMenu.setValue(1, temp.s_username);
+        stprofileMenu.setValue(2, temp.s_password);
+        stprofileMenu.setValue(3, temp.s_email);
+        stprofileMenu.setValue(4, temp.s_phoneNo);
+        stprofileMenu.setValue(5, temp.s_address);
 
 
 
         switch (stprofileMenu.prompt())
         {
         case 1:
+            cout << "ID cannot changed. ";
+            _getch();
+            break;
+        case 2:
             cout << "Insert username:";
             cin >> temp.s_username;
             break;
-        case 2:
+        case 3:
             cout << "Insert password:";
             cin >> temp.s_password;
             break;
-        case 3:
+        case 4:
             cout << "Insert email:";
             cin >> temp.s_email;
             break;
-        case 4:
+        case 5:
             cout << "Insert s_phoneNo:";
             getline(cin, temp.s_phoneNo);
             break;
-        case 5:
+        case 6:
             cout << "Insert s_address:";
             getline(cin, temp.s_address);
             break;
-        case 6:
+        case 7:
             temp = suser;
             break;
-        case 7:
+        case 8:
             suser = temp;
             suser.update();
             cout << "Updated";
             _getch();
             break;
-        case 8:
+        case 9:
             return suser;
             break;
        
@@ -619,7 +617,7 @@ void staffInfo(staff suser)
         viewMenu.header = "\t\t -------------------- Staff Information -----------------------\n";
         viewMenu.addOption("View All Staff");
         viewMenu.addOption("Delete Staff");
-        viewMenu.addOption("logout\n");
+        
 
         viewMenu.footer = "\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
 
@@ -635,10 +633,7 @@ void staffInfo(staff suser)
                 break;
             case 1:
                 DeleteStaff(suser);
-                break;
-            case 2:
-                main();
-                break;
+                break;           
             default:
                 break;
             }
@@ -802,7 +797,6 @@ void custmanage(customer cuser)
 
         cmanageMenu.addOption("register customer");
         cmanageMenu.addOption("view customer");
-        cmanageMenu.addOption("delete customer");
         cmanageMenu.addOption("back");
 
         cmanageMenu.footer = "\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
@@ -821,9 +815,6 @@ void custmanage(customer cuser)
                 ViewAllCust();// Add code for view customer
                 break;
             case 2:
-                DeleteCustomer( cuser);// Add code for delete customer
-                break;
-            case 3:
                 sthome(suser);
                 break;
             default:
@@ -1049,8 +1040,6 @@ void Rental(payment pays, rental ruser, customer cuser, staff suser, reservation
         ArrowMenu rMenu;
         rMenu.header = "\n\t\t========================= RENTAL PAGE ============================\n "  ;
         rMenu.addOption("insert rental");
-        rMenu.addOption("update rental");
-        rMenu.addOption("delete rental");
         rMenu.addOption("view rental");
         rMenu.addOption("Back");
 
@@ -1068,17 +1057,9 @@ void Rental(payment pays, rental ruser, customer cuser, staff suser, reservation
                 InsertRental( ruser,  cuser, suser);
                 break;
             case 1:
-                
-                _getch();
-                //UpdateRental();
+                ViewAllRentalreserve(pays, ruser, cuser, suser, reuser, vehicles);
                 break;
             case 2:
-                //DeleteRental();
-                break;
-            case 3:
-                ViewAllRental(pays, ruser, cuser, suser, reuser, vehicles);
-                break;
-            case 4:
                 sthome(suser);
                 break;
             default:
@@ -1233,7 +1214,7 @@ void ViewAllRental(payment pays, rental ruser , customer cuser, staff suser, res
             dispR = "";
             break;
         case 5:
-            rentReservation(pays, ruser, reuser, vehicles);
+            return;
         }
     }
 }
@@ -1245,7 +1226,6 @@ void vehiclePage()
         ArrowMenu vMenu;
         vMenu.header = "\t\t====================== Vehicle Page ========================\n";
         vMenu.addOption("insert vehicle");
-        vMenu.addOption("update vehicle"); 
         vMenu.addOption("delete vehicle");
         vMenu.addOption("display vehicle");
         vMenu.addOption("Back");
@@ -1265,12 +1245,10 @@ void vehiclePage()
             case 0:
                 InsertVehicle (vehicles);
             case 1:
-                UpdateVehicle();
-            case 2:
                 DeleteVehicle(vehicles);
-            case 3:
+            case 2:
                 ViewAllVehicle();
-            case 4:
+            case 3:
                 adhome(auser);
                 break;
 
@@ -1290,7 +1268,6 @@ vehicle InsertVehicle(vehicle vehicles)
         insertMenu.addOption("No Plate: ");
         insertMenu.addOption("Model");
         insertMenu.addOption("Year:");
-        insertMenu.addOption("Availibility:");
         insertMenu.addOption("Vehicle Rate:");
         insertMenu.addOption("Save");
         insertMenu.addOption("return");
@@ -1336,8 +1313,8 @@ vehicle InsertVehicle(vehicle vehicles)
                 _getch();
                 break;
 
-            case 8:
-                return vehicles ;
+            case 7:
+                vehiclePage();
             default:
                 break;
             }
@@ -1430,10 +1407,7 @@ void ViewAllVehicle()
 
     }
 
-void UpdateVehicle()
-{
 
-}
  
 vehicle DeleteVehicle(vehicle vehicles)
 {
@@ -1480,7 +1454,7 @@ vehicle DeleteVehicle(vehicle vehicles)
             system("cls");
             break;
         case 2:
-            return vehicles;
+            vehiclePage();
             system("cls");
             break;
         default:
@@ -1489,9 +1463,88 @@ vehicle DeleteVehicle(vehicle vehicles)
     }
 }
 
+void ViewAllRentalreserve(payment pays, rental ruser, customer cuser, staff suser, reservation reuser, vehicle vehicles)
+{
+    vector<rental> rentals;
+    string dispR = "";
+
+    rental temp = ruser;
+    temp.custId = cuser.custId;
+    temp.staffId = suser.staffId;
+    int rentalId = 0, custId = 0, staffId = 0;
+    string rentalDate = "", status = "";
+    bool asc = true;
+
+    Menu rList;
+    rList.header = "Search rental : ";
+    rList.addOption("rental date");
+    rList.addOption("status");
+    rList.addOption("sorting");
+    rList.addOption("search");
+    rList.addOption("back");
+
+    rList.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '5' to go back.";
+
+
+    while (1)
+    {
+        if (asc)
+        {
+            rList.setValue(2, "Ascending");
+        }
+        else
+        {
+            rList.setValue(2, "Descending");
+        }
+
+
+        if (dispR == "")
+        {
+            dispR = "\nResult:\n\n";
+            stringstream tmpR;
+            tmpR << setw(10) << "Rental ID" << "|" << setw(10) << "Cust ID" << "|" << setw(10) << " Staff ID" << "|" << setw(20) << " Rental Date " << "|" << endl;
+
+            for (int i = 0; i < rentals.size(); i++)
+            {
+                tmpR << setw(10) << rentals[i].rentalId << "|" << setw(10) << rentals[i].custId << "|" << setw(10) << rentals[i].staffId << "|" << setw(20) << rentals[i].rentalDate << "|" << endl;
+            }
+            dispR += tmpR.str();
+        }
+        rList.footer = dispR;
+
+
+        switch (rList.prompt())
+        {
+        case 1:
+            cout << "\nInsert Rental Date : ";
+
+            getline(cin, rentalDate);
+            rList.setValue(0, rentalDate);
+            break;
+
+        case 2:
+            cout << "Insert Status : ";
+            getline(cin, status);
+            rList.setValue(1, status);
+            break;
+
+        case 3:
+            asc = !asc;
+            break;
+
+        case 4:
+            rentals = rental::findRental(rentalDate, asc);
+            dispR = "";
+            break;
+        case 5:
+            return;
+        }
+    }
+}
+
 
  //payment
-payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle vehicles)
+payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle vehicles,staff suser )
 {
 
     payment paym;
@@ -1518,9 +1571,9 @@ payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle
 
     bool valid = true;
     char confirm;
+    int RID;
 
     customer cuser;
-    staff suser;
     while (1)
     {
         
@@ -1530,7 +1583,8 @@ payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle
             ViewAllRental(pays, ruser, cuser, suser, reuser, vehicles);
         case 2:
             cout << "Enter Rental ID: ";
-            cin >> reserve.rentalId;
+            cin >> RID;
+            reserve.rentalId = RID;
 
             rentMenu.setValue(1, to_string(reserve.rentalId));
             break;
@@ -1601,10 +1655,9 @@ payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle
 
             paym.value = value;
 
-            int rentID;
-            rentID = reserve.rentalId;
+            paym.rentalId = RID;
 
-            paym.insert(rentID);
+            paym.insert();
 
             paymentTrans(reserve.rentalId, ruser, reserve, vehicles);
             break;

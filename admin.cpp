@@ -79,7 +79,7 @@ void admin::insert() {
 
 void admin::update() {
     DBConnection db;
-    db.prepareStatement("UPDATE into admin (  a_username, a_email, a_password, a_firstName, a_lastName, a_phoneNo,a_address) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
+    db.prepareStatement("UPDATE admin SET  a_username = ?, a_email = ? , a_password = ? , a_firstName = ? , a_lastName = ?, a_phoneNo = ? ,a_address = ? WHERE adminId = ? ");
  
     db.stmt->setString(1, a_username);
     db.stmt->setString(2, a_email);
@@ -88,8 +88,10 @@ void admin::update() {
     db.stmt->setString(5, a_lastName);
     db.stmt->setString(6, a_phoneNo);
     db.stmt->setString(7, a_address);
-
+    db.stmt->setInt(8, adminId);
     db.QueryStatement();
+    db.~DBConnection();
+
 }
 
 void admin::remove() {

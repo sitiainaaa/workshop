@@ -35,11 +35,11 @@ payment::payment(int paymentId, int rentalId,int value ,std::string payment_Date
 }
 
 
-void payment::insert( int rentID) {
+void payment::insert() {
     DBConnection db; // instantiate
     db.prepareStatement("INSERT INTO payment ( rentalId, value ) VALUES (?, ?)");
    
-    db.stmt->setInt(1, rentID);
+    db.stmt->setInt(1, rentalId);
     db.stmt->setInt(2, value);
     db.QueryStatement();
     db.~DBConnection();
