@@ -650,7 +650,7 @@ void ViewAllStaff()
         string user = "", s_firstName = "", s_lastName = "", s_email="" , s_phoneNo ="", s_address="";
         bool asc = true;
     
-        ArrowMenu sList;
+        Menu sList;
         sList.header = "Search Staff : ";
         sList.addOption("username");
         sList.addOption("s_firstName");
@@ -692,36 +692,34 @@ void ViewAllStaff()
             
             switch (sList.prompt())
             {
-            case -1:
-                return;
-                break;
-            case 0:
+          
+            case 1:
                 cout << "\nInsert Username : ";
                 getline (cin, user ) ;
                  sList.setValue(0, user ) ;
                 break;
 
-            case 1:
+            case 2:
                 cout << "Insert First Name : ";
                 getline(cin, s_firstName);
                 sList.setValue(1, s_firstName );
                 break;
 
-            case 2:
+            case 3:
                 cout << "Insert Last Name : ";
                 getline(cin, s_lastName);
                 sList.setValue(2, s_lastName);
                 break;
 
-            case 3:
+            case 4:
                 asc = !asc;
                 break;
 
-            case 4:
+            case 5:
                 staffs = staff::findStaff(user , s_firstName ,s_lastName  , asc);
                 dispS = "";
                 break;
-            case 5:
+            case 6:
                 return;
 
 
