@@ -96,7 +96,6 @@ void adminPage()
     Rolemenu.header = "\n\n\t\t-------------------ADMIN PAGE----------------------\n\n\t\t Select Option: ";
 
     Rolemenu.addOption("Login");
-  /*  Rolemenu.addOption("Register Admin");*/
     Rolemenu.addOption("Exit");
 
     Rolemenu.footer = "\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
@@ -109,9 +108,7 @@ void adminPage()
             break;
         case 0:
             Login();
-       /* case 1:
-            Register();
-            break;*/
+    
         case 1:
             main();
         default:
@@ -223,7 +220,7 @@ admin adprofile(admin auser) {
     adprofileMenu.addOption("Save");
     adprofileMenu.addOption("Back");
     adprofileMenu.addOption("Delete Account");
-    adprofileMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '' to go back.";
+    adprofileMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '8' to go back.";
 
     char confirm;
     string tmpInput;
