@@ -23,7 +23,7 @@
 
 using namespace std;
 
-//void Register();
+
 void Registerstaff();
 void Login();
 void Loginstaff();
