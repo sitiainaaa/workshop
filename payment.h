@@ -18,7 +18,7 @@ public:
 
     // Member functions
     /*bool Login();*/
-    void insert();
+    void insert(int rentID);
     void update(); // Provide implementation if needed
     void remove();
 

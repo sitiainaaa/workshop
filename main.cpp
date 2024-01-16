@@ -7,8 +7,7 @@
 #include<ctime>
 #include<string>
 
-////// advanced
-////// include our custom class
+
 #include "ArrowMenu.h"
 #include "admin.h" 
 #include "menu.h"
@@ -1491,10 +1490,11 @@ vehicle DeleteVehicle(vehicle vehicles)
 }
 
 
-// payment
+ //payment
 payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle vehicles)
 {
-    
+
+    payment paym;
     payment temp = pays,pay;
     int paymentId = 0, rentalId = 0, vehicleId = 0, ID, value;
     vehicle vehi;
@@ -1531,6 +1531,7 @@ payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle
         case 2:
             cout << "Enter Rental ID: ";
             cin >> reserve.rentalId;
+
             rentMenu.setValue(1, to_string(reserve.rentalId));
             break;
         case 3:
@@ -1598,10 +1599,12 @@ payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle
 
             value = vehi.vehicleRate * reserve.noPerday;
 
-            pay.rentalId = reserve.rentalId;
-            pay.value = value;
-            
-            pay.insert();
+            paym.value = value;
+
+            int rentID;
+            rentID = reserve.rentalId;
+
+            paym.insert(rentID);
 
             paymentTrans(reserve.rentalId, ruser, reserve, vehicles);
             break;
@@ -1614,6 +1617,7 @@ payment rentReservation(payment pays , rental ruser, reservation reuser ,vehicle
         }
     }
 }
+
 
 void paymentTrans(int rentalId, rental ruser, reservation reuser , vehicle vehicles )
 {
@@ -1631,8 +1635,6 @@ void paymentTrans(int rentalId, rental ruser, reservation reuser , vehicle vehic
     system("cls");
     // Display reservation details
     cout << "\n\t\t Your reservation details:  " << " \nTotal Payment: " << value << endl;
-    cout << rentalId;
-    _getch();
 
       
     // Display calculation details
@@ -1641,7 +1643,7 @@ void paymentTrans(int rentalId, rental ruser, reservation reuser , vehicle vehic
 
     // Confirm payment with the user
     cout << "\t\t\t\t\t\n\nYour total payment is RM " << value <<
-        "\n\t\t\t\t\tDo you want to continue with the payment? (y/n)";
+        "\n\t\t\tDo you want to continue with the payment? (y/n)";
 
     char confirm;
     confirm = _getch();
@@ -1652,12 +1654,14 @@ void paymentTrans(int rentalId, rental ruser, reservation reuser , vehicle vehic
         // Assuming reserve.insert() should be done here
         cout << "\n\t\t\t\t\tYour payment is successful!";
         cout << "\n\t\t\t\t\tPress Enter to continue...";  // Prompt for Enter key
+        _getch();
     }
     else
     {
         cout << "Payment Cancelled.";
+        _getch();
     }
-    _getch();
+    
     
 }
 
