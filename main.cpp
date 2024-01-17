@@ -59,7 +59,7 @@ bool validateDate(const std::string& date);
 int main() {
 
     ArrowMenu mainmenu;
-    mainmenu.header = "\n\t\t----Welcome to UTeM Rental Vehicle System----- \n\n\t\t Choose your role: ";
+    mainmenu.header = "\n\t\t----Welcome to UTeM Vehicle Rental System----- \n\n\t\t Choose your role: ";
     mainmenu.addOption("Admin");
     mainmenu.addOption("Staff");
     mainmenu.addOption("Exit");
