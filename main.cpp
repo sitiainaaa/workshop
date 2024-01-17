@@ -37,7 +37,7 @@ void staffInfo(staff suser);
 void custmanage(customer cuser);
 void Registercust();
 void ViewAllCust();
-//customer DeleteCustomer(customer cuser);
+
 void ViewAllStaff();
 staff DeleteStaff(staff suser);
 void Rental(payment pays, rental ruser,  customer cuser, staff suser, reservation reuser, vehicle vehicles);
