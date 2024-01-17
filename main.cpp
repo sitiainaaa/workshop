@@ -830,7 +830,7 @@ void Registercust()
 
         rgMenu.addOption("First Name");  // Change the label to "First Name"
         rgMenu.addOption("Last Name");
-        rgMenu.addOption("Gender");// Add an option for the last name
+        rgMenu.addOption("Gender");
         rgMenu.addOption("Address");
         rgMenu.addOption("Phone No");
         rgMenu.addOption("Register");
@@ -1268,7 +1268,7 @@ vehicle InsertVehicle(vehicle vehicles)
         insertMenu.addOption("Vehicle Rate:");
         insertMenu.addOption("Save");
         insertMenu.addOption("return");
-        insertMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '8' to go back.";
+        insertMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '7' to go back.";
 
 
         bool valid = true;
