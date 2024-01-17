@@ -1354,6 +1354,7 @@ void ViewAllVehicle()
 
             if (dispV == "")
             {
+               
                 dispV = "\nResult:\n\n";
                 stringstream tmpV;
                 tmpV << setw(4) << "ID" << "|" << setw(15) << " Vehicle Type " << "|" << setw(10) << "No Plate" << "|" << setw(15) << "Model" << "|" << setw(15) << "Vehicle Rate" << "|" << endl;
