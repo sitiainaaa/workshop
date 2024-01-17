@@ -207,7 +207,7 @@ admin adprofile(admin auser) {
     admin temp = auser; // copy the object
 
     Menu adprofileMenu;
-    adprofileMenu.header = "\t\t -------------------- Your profile -----------------------\n";
+    adprofileMenu.header = "\t\t --------------------- admin update profile -----------------------\n";
     adprofileMenu.addOption("admin ID");
     adprofileMenu.addOption("username");
     adprofileMenu.addOption("password");
@@ -502,7 +502,7 @@ staff stfprofile(staff suser)
 {
     staff temp = suser; // copy the object
     Menu stprofileMenu;
-    stprofileMenu.header = "\t\t -------------------- Your profile -----------------------\n";
+    stprofileMenu.header = "\t\t -------------------- staff update profile -----------------------\n";
     stprofileMenu.addOption("staff ID");
     stprofileMenu.addOption("username");
     stprofileMenu.addOption("password");
