@@ -91,7 +91,7 @@ customer customer::selectCustomer(int custId)
 vector<customer>customer::findCustomer(string c_firstName, string c_lastName , string c_gender , bool ascending)
 {
     string query = "SELECT * FROM customer WHERE "
-        " c_firstName LIKE ? AND c_lastName LIKE ? AND c_gender = ? "
+        " c_firstName LIKE ? AND c_lastName LIKE ? AND c_gender LIKE ? "
         " ORDER BY c_firstName ";
 
     if (ascending)
@@ -107,7 +107,7 @@ vector<customer>customer::findCustomer(string c_firstName, string c_lastName , s
     db.prepareStatement(query);
     db.stmt->setString(1, "%" + c_firstName + "%");
     db.stmt->setString(2, "%" + c_lastName + "%");
-    db.stmt->setString(3, c_gender );
+    db.stmt->setString(3, "%" + c_gender + "%");
 
     vector<customer> customers;
 
