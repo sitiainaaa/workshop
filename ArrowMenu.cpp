@@ -6,7 +6,7 @@ using namespace std;
 
 ArrowMenu::ArrowMenu() {
 	footer = "/t/tUse Up/Down key to move selection and press enter to select\nPress Escape to go back";
-	separator = "\t\t---------------------------------------------------";
+	separator = "\t\t\t\t";
 	bullet = "\t\t>";
 	limit = 10;
 }

@@ -6,8 +6,7 @@
 #include<chrono>
 #include<ctime>
 #include<string>
-
-
+#include <windows.h>
 #include "ArrowMenu.h"
 #include "admin.h" 
 #include "menu.h"
@@ -26,8 +25,6 @@ using namespace std;
 void Registerstaff();
 void Login();
 void Loginstaff();
-void adminPage();
-void staffPage();
 void adhome(admin auser);
 admin adprofile(admin auser);
 void sthome(staff suser);
@@ -59,12 +56,13 @@ bool validateDate(const std::string& date);
 int main() {
 
     ArrowMenu mainmenu;
-    mainmenu.header = "\n\t\t----Welcome to UTeM Vehicle Rental System----- \n\n\t\t Choose your role: ";
-    mainmenu.addOption("Admin");
-    mainmenu.addOption("Staff");
-    mainmenu.addOption("Exit");
+    mainmenu.header = "\n\t\t----Welcome to UTeM Vehicle Rental System----- \n\n\t\t Choose your role: \n\t\t------------------------------------------------------";
+    mainmenu.bullet = "\t\t\t\t=>";
+    mainmenu.addOption(" Admin");
+    mainmenu.addOption(" Staff");
+    mainmenu.addOption(" Exit");
 
-    mainmenu.footer = "\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
+    mainmenu.footer = "\t\t------------------------------------------------------\n\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
 
     while (1) {
         switch (mainmenu.prompt())
@@ -73,10 +71,10 @@ int main() {
             return 0;
             break;
         case 0:
-            adminPage();
+            Login();
             break;
         case 1:
-            staffPage();
+            Loginstaff();
             break;
         case 2:
             exit(0);
@@ -87,56 +85,33 @@ int main() {
     }
 }
 
-void adminPage()
-{
-    ArrowMenu Rolemenu;
-    Rolemenu.header = "\n\n\t\t-------------------ADMIN PAGE----------------------\n\n\t\t Select Option: ";
-
-    Rolemenu.addOption("Login");
-    Rolemenu.addOption("Exit");
-
-    Rolemenu.footer = "\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
-
-    while (1) {
-        switch (Rolemenu.prompt())
-        {
-        case -1:
-            return ;
-            break;
-        case 0:
-            Login();
-    
-        case 1:
-            main();
-        default:
-            break;
-        }
-    }
-
-}
-
 void Login() {
+
+    HANDLE col;
+    col = GetStdHandle(STD_OUTPUT_HANDLE);
+
     Menu loginMenu;
     loginMenu.header = "\t\t ===================== Admin Login =============================\n";
     loginMenu.addOption("username");
     loginMenu.addOption("password");
     loginMenu.addOption("Login");
     loginMenu.addOption("Back\n");
-    loginMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '4' to go back.";
+    loginMenu.footer = "\t\t================================================================\n\t\tFill in the details, then press Enter after each input.\n\t\tEnter '4' to go back.";
         
 
     admin auser;
 
     while (1) {
+        SetConsoleTextAttribute(col, 7);
         switch (loginMenu.prompt())
         {
         case 1:
-            cout << "Insert username:";
+            cout << "\n\t\tInsert username:";
             cin >> auser.a_username;
             loginMenu.setValue(0, auser.a_username);
             break;
         case 2:
-            cout << "Insert Password:";
+            cout << "\n\t\tInsert Password:";
             auser.a_password = admin::getMaskedInput("");
             loginMenu.setValue(1, std::string(auser.a_password.length(), '*'));
            /* loginMenu.setValue(1, auser.a_password);*/
@@ -146,12 +121,13 @@ void Login() {
                 adhome(auser);
             }
             else {
-                cout << "Invalid Login";
+                SetConsoleTextAttribute(col, 12);
+                cout << "\n\t\t Invalid Login";
                 _getch();
             }
             break;
         case 4:
-            adminPage();
+            main();
             break;
         default:
             break;
@@ -163,18 +139,21 @@ void Login() {
 void adhome(admin auser) {
 
     ArrowMenu adhomeMenu;
-    adhomeMenu.header = "\t\t\t\t Welcome " + auser.a_username;
 
+    adhomeMenu.bullet = "\t\t\t\t\t\t=>";
     adhomeMenu.addOption("Admin Profile");
     adhomeMenu.addOption("Manage Staff");
     adhomeMenu.addOption("Manage Vehicle");
     adhomeMenu.addOption("Sale Report");
     adhomeMenu.addOption("Logout\n");
 
-    adhomeMenu.footer = "\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
+    adhomeMenu.footer = "\t\t========================================================\n\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
 
     staff suser;
     while (1) {
+        adhomeMenu.header = "\t\t================================================\n\t\t\t\t\t\t\tWelcome " + auser.a_username + "\n\t\t================================================";
+
+
         switch (adhomeMenu.prompt())
         {
         case -1:
@@ -296,32 +275,7 @@ admin adprofile(admin auser) {
 
 //staff
 
-void staffPage()
-{
-    ArrowMenu Rolemenu;
-    Rolemenu.header = "\n\t\t--------------------- STAFF PAGE ------------------\n\n\t\t ";
-    Rolemenu.addOption("Login");
-    Rolemenu.addOption("Exit\n");
 
-    Rolemenu.footer = "\t\tUse Up / Down key to move selection and press enter to select\n\t\tPress Escape to go back";
-
-
-
-    while (1) {
-        switch (Rolemenu.prompt())
-        {
-        case -1:
-            return;
-            break;
-        case 0:
-            Loginstaff();
-            break;
-        case 1:
-            main();
-            break;
-        }
-    }
-}
 
 void Registerstaff() {
     staff newacc;
@@ -406,17 +360,23 @@ void Registerstaff() {
 }
 
 void Loginstaff() {
+
+    HANDLE col;
+    col = GetStdHandle(STD_OUTPUT_HANDLE);
+
+
     Menu loginMenu;
     loginMenu.header = "\t\t======================== Staff Login ========================\n";
     loginMenu.addOption("username");
     loginMenu.addOption("password");
     loginMenu.addOption("Login");
     loginMenu.addOption("Back");
-    loginMenu.footer = "\t\tFill in the details, then press Enter after each input.\n\t\tEnter '4' to go back.";
+    loginMenu.footer = "\t\t=============================================================\n\t\tFill in the details, then press Enter after each input.\n\t\tEnter '4' to go back.";
 
     staff suser;
 
     while (1) {
+        SetConsoleTextAttribute(col, 7);
         switch (loginMenu.prompt())
         {
         case 1:
@@ -436,12 +396,13 @@ void Loginstaff() {
                 sthome(suser);
             }
             else {
-                cout << "Invalid Login";
+                SetConsoleTextAttribute(col, 12);
+                cout << "\n\t\t\t\t\tInvalid Login";
                 _getch();
             }
             break;
         case 4:
-            staffPage();
+            main();
             break;
         }
     }
